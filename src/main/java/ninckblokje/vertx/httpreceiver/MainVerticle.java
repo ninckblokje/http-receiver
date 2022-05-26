@@ -113,7 +113,7 @@ public class MainVerticle extends AbstractVerticle {
       System.out.println("- With headers:");
 
       req.headers()
-        .forEach((header, value) -> System.out.printf("  - %s : %s%n", header, value));
+        .forEach((header, value) -> System.out.printf("  - %s : %s%n", header, ("authorization".equals(header.toLowerCase()) ? "***" : value)));
 
       req.body()
         .map(Buffer::toString)
