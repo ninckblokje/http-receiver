@@ -38,6 +38,32 @@ Host: server.dummy
 
 ###
 
+POST http://localhost:8888/upload
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="small.txt"; filename="small.txt"
+Content-Type: text/plain
+
+< ../data/small.txt
+
+--boundary
+
+###
+
+POST http://localhost:8888/upload
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="small.txt"; filename="small.txt"
+Content-Type: text/plain
+
+< ../data/large.txt
+
+--boundary
+
+###
+
 GET https://localhost:8888/dummy
 Authorization: Basic user:Dummy_123
 Host: server.dummy
@@ -51,3 +77,29 @@ Host: server.dummy
 {
   "a": "b"
 }
+
+###
+
+POST https://localhost:8888/upload
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="small.txt"; filename="small.txt"
+Content-Type: text/plain
+
+< ../data/small.txt
+
+--boundary
+
+###
+
+POST https://localhost:8888/upload
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="small.txt"; filename="small.txt"
+Content-Type: text/plain
+
+< ../data/large.txt
+
+--boundary
