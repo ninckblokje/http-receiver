@@ -42,7 +42,7 @@
     <maven-shade-plugin.version>3.3.0</maven-shade-plugin.version>
     <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
     <exec-maven-plugin.version>3.0.0</exec-maven-plugin.version>
-    <jib-maven-plugin.version>3.2.1</jib-maven-plugin.version>
+    <jib-maven-plugin.version>3.4.0</jib-maven-plugin.version>
     <native-maven-plugin.version>0.9.11</native-maven-plugin.version>
 
     <vertx.version>4.3.1</vertx.version>
@@ -132,7 +132,7 @@
             <mainClass>${main.verticle}</mainClass>
           </container>
           <from>
-            <image>gcr.io/distroless/java17-debian11</image>
+            <image>gcr.io/distroless/java17-debian12</image>
             <platforms>
               <platform>
                 <architecture>amd64</architecture>
