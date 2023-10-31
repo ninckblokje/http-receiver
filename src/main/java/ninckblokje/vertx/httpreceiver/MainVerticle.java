@@ -69,6 +69,7 @@ public class MainVerticle extends AbstractVerticle {
           .add(httpReceiverResponseContentKey)
           .add(httpReceiverPfxStorePasswordKey)
           .add(httpReceiverPfxStorePathKey)
+          .add(httpReceiverLogAuthorizationHeaderKey)
         ));
     var cfgRetrieverOptions = new ConfigRetrieverOptions()
       .addStore(envCfgOptions);
@@ -84,6 +85,7 @@ public class MainVerticle extends AbstractVerticle {
         var content = entries.getString(httpReceiverResponseContentKey, "Hello from Vert.x!");
 
         var logAuthorizationHeader = entries.getBoolean(httpReceiverLogAuthorizationHeaderKey, false);
+        if (logAuthorizationHeader) System.err.println("Warning: Logging authorization header!");
 
         var httpServerOptions = createHttpServerOptions(entries);
         startHttpServer(startPromise, port, statusCode, statusMessage, contentType, content, logAuthorizationHeader, httpServerOptions);
