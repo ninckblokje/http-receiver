@@ -36,7 +36,6 @@ import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
-import io.vertx.core.net.JksOptions;
 import io.vertx.core.net.PfxOptions;
 
 public class MainVerticle extends AbstractVerticle {
@@ -49,6 +48,8 @@ public class MainVerticle extends AbstractVerticle {
   private final static String httpReceiverResponseContentKey = "HTTP_RECEIVER_RESPONSE_CONTENT";
   private final static String httpReceiverPfxStorePathKey = "HTTP_RECEIVER_PFX_STORE_PATH";
   private final static String httpReceiverPfxStorePasswordKey = "HTTP_RECEIVER_PFX_STORE_PASSWORD";
+
+  private final static String httpReceiverLogAuthorizationHeaderKey = "HTTP_RECEIVER_LOG_AUTHORIZATION_HEADER";
 
   public static void main(String[] args) {
     var vertx = Vertx.vertx();
@@ -82,8 +83,10 @@ public class MainVerticle extends AbstractVerticle {
         var contentType = entries.getString(httpReceiverResponseContentTypeKey, "text/plain");
         var content = entries.getString(httpReceiverResponseContentKey, "Hello from Vert.x!");
 
+        var logAuthorizationHeader = entries.getBoolean(httpReceiverLogAuthorizationHeaderKey, false);
+
         var httpServerOptions = createHttpServerOptions(entries);
-        startHttpServer(startPromise, port, statusCode, statusMessage, contentType, content, httpServerOptions);
+        startHttpServer(startPromise, port, statusCode, statusMessage, contentType, content, logAuthorizationHeader, httpServerOptions);
       });
   }
 
@@ -106,14 +109,14 @@ public class MainVerticle extends AbstractVerticle {
     }
   }
 
-  private void startHttpServer(Promise<Void> startPromise, int port, int statusCode, String statusMessage, String contentType, String content, HttpServerOptions httpServerOptions) {
+  private void startHttpServer(Promise<Void> startPromise, int port, int statusCode, String statusMessage, String contentType, String content, boolean logAuthorizationHeader, HttpServerOptions httpServerOptions) {
     vertx.createHttpServer(httpServerOptions).requestHandler(req -> {
       System.out.printf("Received request from: %s, on: %s:%s%n", req.connection().remoteAddress(), req.method().name(), req.absoluteURI());
 
       System.out.println("- With headers:");
 
       req.headers()
-        .forEach((header, value) -> System.out.printf("  - %s : %s%n", header, ("authorization".equals(header.toLowerCase()) ? "***" : value)));
+        .forEach((header, value) -> System.out.printf("  - %s : %s%n", header, ("authorization".equalsIgnoreCase(header) && !logAuthorizationHeader ? "***" : value)));
 
       req.body()
         .map(Buffer::toString)
