@@ -30,7 +30,7 @@
 
   <groupId>ninckblokje.vertx</groupId>
   <artifactId>http-receiver</artifactId>
-  <version>1.2.11-SNAPSHOT</version>
+  <version>1.2.11</version>
 
   <properties>
     <project.scm.id>github</project.scm.id>
@@ -52,7 +52,7 @@
 
   <scm>
     <developerConnection>scm:git:https://github.com/ninckblokje/http-receiver</developerConnection>
-    <tag>HEAD</tag>
+    <tag>v1.2.11</tag>
   </scm>
 
   <dependencyManagement>
