@@ -26,4 +26,36 @@ It is possible to configure `http-receiver` using environment variables specifie
 Example JSON:
 
 ````json
+{
+  "remoteAddress": "127.0.0.1:64090",
+  "absoluteURI": "http://server.dummy/dummy",
+  "httpMethod": "GET",
+  "receivedHeaders": [
+    {
+      "name": "Authorization",
+      "value": "***"
+    },
+    {
+      "name": "Host",
+      "value": "server.dummy"
+    },
+    {
+      "name": "User-Agent",
+      "value": "IntelliJ HTTP Client/IntelliJ IDEA 2024.1.4"
+    },
+    {
+      "name": "Accept-Encoding",
+      "value": "br, deflate, gzip, x-gzip"
+    },
+    {
+      "name": "Accept",
+      "value": "*/*"
+    },
+    {
+      "name": "content-length",
+      "value": "0"
+    }
+  ],
+  "receivedBody": ""
+}
 ````
