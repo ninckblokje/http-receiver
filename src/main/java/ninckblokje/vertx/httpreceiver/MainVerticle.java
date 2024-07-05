@@ -42,6 +42,7 @@ public class MainVerticle extends AbstractVerticle {
 
   private final static String httpReceiverPortKey = "HTTP_RECEIVER_PORT";
 
+  private final static String httpReceiverResponseReturnRequestDetails = "HTTP_RECEIVER_RESPONSE_RETURN_REQUEST_DETAILS";
   private final static String httpReceiverResponseStatusCodeKey = "HTTP_RECEIVER_RESPONSE_STATUS_CODE";
   private final static String httpReceiverResponseStatusMessageKey = "HTTP_RECEIVER_RESPONSE_STATUS_MESSAGE";
   private final static String httpReceiverResponseContentTypeKey = "HTTP_RECEIVER_RESPONSE_STATUS_CONTENT_TYPE";
@@ -77,18 +78,19 @@ public class MainVerticle extends AbstractVerticle {
     var cfgRetriever = ConfigRetriever.create(vertx, cfgRetrieverOptions);
     cfgRetriever.getConfig()
       .onSuccess(entries -> {
-        var port = entries.getInteger(httpReceiverPortKey, 8888).intValue();
+        var port = entries.getInteger(httpReceiverPortKey, 8888);
 
-        var statusCode = entries.getInteger(httpReceiverResponseStatusCodeKey, 200).intValue();
+        var statusCode = entries.getInteger(httpReceiverResponseStatusCodeKey, 200);
         var statusMessage = entries.getString(httpReceiverResponseStatusMessageKey, "");
-        var contentType = entries.getString(httpReceiverResponseContentTypeKey, "text/plain");
-        var content = entries.getString(httpReceiverResponseContentKey, "Hello from Vert.x!");
+        var returnRequestDetails = entries.getBoolean(httpReceiverResponseReturnRequestDetails, true);
+        var contentType = entries.getString(httpReceiverResponseContentTypeKey, "application/json");
+        var content = entries.getString(httpReceiverResponseContentKey);
 
         var logAuthorizationHeader = entries.getBoolean(httpReceiverLogAuthorizationHeaderKey, false);
         if (logAuthorizationHeader) System.err.println("Warning: Logging authorization header!");
 
         var httpServerOptions = createHttpServerOptions(entries);
-        startHttpServer(startPromise, port, statusCode, statusMessage, contentType, content, logAuthorizationHeader, httpServerOptions);
+        startHttpServer(startPromise, port, statusCode, statusMessage, returnRequestDetails, contentType, content, logAuthorizationHeader, httpServerOptions);
       });
   }
 
@@ -111,18 +113,32 @@ public class MainVerticle extends AbstractVerticle {
     }
   }
 
-  private void startHttpServer(Promise<Void> startPromise, int port, int statusCode, String statusMessage, String contentType, String content, boolean logAuthorizationHeader, HttpServerOptions httpServerOptions) {
+  private void startHttpServer(Promise<Void> startPromise, int port, int statusCode, String statusMessage, boolean returnRequestDetails, String contentType, String content, boolean logAuthorizationHeader, HttpServerOptions httpServerOptions) {
     vertx.createHttpServer(httpServerOptions).requestHandler(req -> {
+      var responseObject = new JsonObject()
+        .put("remoteAddress", req.connection().remoteAddress().toString())
+        .put("absoluteURI", req.absoluteURI())
+        .put("httpMethod", req.method().name())
+        .put("receivedHeaders", new JsonArray())
+        .put("receivedBody", "");
+
       System.out.printf("Received request from: %s, on: %s:%s%n", req.connection().remoteAddress(), req.method().name(), req.absoluteURI());
 
       System.out.println("- With headers:");
 
-      req.headers()
-        .forEach((header, value) -> System.out.printf("  - %s : %s%n", header, ("authorization".equalsIgnoreCase(header) && !logAuthorizationHeader ? "***" : value)));
+      req.headers().entries().stream()
+        .peek(entry -> {
+          if ("authorization".equalsIgnoreCase(entry.getKey()) && !logAuthorizationHeader)
+            entry.setValue("***");
+        })
+        .peek(entry -> responseObject.getJsonArray("receivedHeaders").add(new JsonObject().put("name", entry.getKey()).put("value", entry.getValue())))
+        .forEach(entry -> System.out.printf("  - %s : %s%n", entry.getKey(), entry.getValue()));
 
       req.body()
         .map(Buffer::toString)
         .onSuccess(event -> {
+          responseObject.put("receivedBody", event);
+
           System.out.println("- With body:");
           System.out.println(event);
         });
@@ -131,7 +147,7 @@ public class MainVerticle extends AbstractVerticle {
         .setStatusCode(statusCode)
         .setStatusMessage(statusMessage)
         .putHeader("content-type", contentType)
-        .end(content);
+        .end((returnRequestDetails) ? responseObject.toString() : content);
     }).listen(port, http -> {
       if (http.succeeded()) {
         startPromise.complete();
