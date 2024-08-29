@@ -19,6 +19,7 @@ It is possible to configure `http-receiver` using environment variables specifie
 | HTTP_RECEIVER_RESPONSE_CONTENT                | *see response message* | Response                                           |
 | HTTP_RECEIVER_PFX_STORE_PATH                  |                        | Path to PFX file for TLS, if empty then plain HTTP |
 | HTTP_RECEIVER_PFX_STORE_PASSWORD              |                        | Password for the PFX file                          |
+| HTTP_RECEIVER_TLS_ENABLED_PROTOCOLS           | TLSv1.2,TLSv1.3        | Which TLS protocols should be enabled              |
 | HTTP_RECEIVER_LOG_AUTHORIZATION_HEADER        | false                  | To log the authorization header (true of false)    |
 
 ## Response message
