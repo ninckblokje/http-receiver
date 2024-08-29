@@ -37,6 +37,7 @@ import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
 import io.vertx.core.net.PfxOptions;
+import io.vertx.core.net.TCPSSLOptions;
 
 public class MainVerticle extends AbstractVerticle {
 
@@ -123,6 +124,7 @@ public class MainVerticle extends AbstractVerticle {
         .put("receivedBody", "");
 
       System.out.printf("Received request from: %s, on: %s:%s%n", req.connection().remoteAddress(), req.method().name(), req.absoluteURI());
+      System.out.printf("SSL enabled: %s, TLS version: %s%n", req.isSSL(), req.isSSL() ? req.sslSession().getProtocol() : "none");
 
       System.out.println("- With headers:");
 
