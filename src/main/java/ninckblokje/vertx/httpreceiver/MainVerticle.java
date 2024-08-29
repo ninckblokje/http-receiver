@@ -36,7 +36,13 @@ import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerOptions;
 import io.vertx.core.json.JsonArray;
 import io.vertx.core.json.JsonObject;
+import io.vertx.core.net.KeyStoreOptions;
 import io.vertx.core.net.PfxOptions;
+
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import static io.vertx.core.net.TCPSSLOptions.DEFAULT_ENABLED_SECURE_TRANSPORT_PROTOCOLS;
 
 public class MainVerticle extends AbstractVerticle {
 
@@ -47,8 +53,11 @@ public class MainVerticle extends AbstractVerticle {
   private final static String httpReceiverResponseStatusMessageKey = "HTTP_RECEIVER_RESPONSE_STATUS_MESSAGE";
   private final static String httpReceiverResponseContentTypeKey = "HTTP_RECEIVER_RESPONSE_STATUS_CONTENT_TYPE";
   private final static String httpReceiverResponseContentKey = "HTTP_RECEIVER_RESPONSE_CONTENT";
+
   private final static String httpReceiverPfxStorePathKey = "HTTP_RECEIVER_PFX_STORE_PATH";
   private final static String httpReceiverPfxStorePasswordKey = "HTTP_RECEIVER_PFX_STORE_PASSWORD";
+
+  private final static String httpReceiverTlsEnabledProtocols = "HTTP_RECEIVER_TLS_ENABLED_PROTOCOLS";
 
   private final static String httpReceiverLogAuthorizationHeaderKey = "HTTP_RECEIVER_LOG_AUTHORIZATION_HEADER";
 
@@ -70,6 +79,7 @@ public class MainVerticle extends AbstractVerticle {
           .add(httpReceiverResponseContentKey)
           .add(httpReceiverPfxStorePasswordKey)
           .add(httpReceiverPfxStorePathKey)
+          .add(httpReceiverTlsEnabledProtocols)
           .add(httpReceiverLogAuthorizationHeaderKey)
         ));
     var cfgRetrieverOptions = new ConfigRetrieverOptions()
@@ -98,15 +108,19 @@ public class MainVerticle extends AbstractVerticle {
     var path = entries.getString(httpReceiverPfxStorePathKey);
     var password = entries.getString(httpReceiverPfxStorePasswordKey);
 
+    var enabledProtocolString = entries.getString(httpReceiverTlsEnabledProtocols, String.join(",", DEFAULT_ENABLED_SECURE_TRANSPORT_PROTOCOLS));
+    var enabledProtocols = Arrays.stream(enabledProtocolString.split(",")).collect(Collectors.toSet());
+
     if (path == null) {
       System.out.println("Disabling SSL");
       return new HttpServerOptions()
         .setSsl(false);
     } else {
-      System.out.println("Enabling SSL");
+      System.out.printf("Enabling SSL with the following protocols: %s%n", enabledProtocols);
       return new HttpServerOptions()
         .setSsl(true)
-        .setPfxKeyCertOptions(new PfxOptions()
+        .setEnabledSecureTransportProtocols(enabledProtocols)
+        .setKeyCertOptions(new PfxOptions()
           .setPath(path)
           .setPassword(password)
         );
@@ -123,6 +137,7 @@ public class MainVerticle extends AbstractVerticle {
         .put("receivedBody", "");
 
       System.out.printf("Received request from: %s, on: %s:%s%n", req.connection().remoteAddress(), req.method().name(), req.absoluteURI());
+      System.out.printf("SSL enabled: %s, TLS version: %s%n", req.isSSL(), req.isSSL() ? req.sslSession().getProtocol() : "none");
 
       System.out.println("- With headers:");
 
