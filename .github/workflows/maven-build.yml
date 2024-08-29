@@ -43,6 +43,11 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
+    - name: Docker Hub login
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
     - name: Build with Maven
       run: ./mvnw -B verify jib:build --file pom.xml
     - name: Update dependency graph
