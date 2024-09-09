@@ -45,7 +45,7 @@
     <jib-maven-plugin.version>3.4.3</jib-maven-plugin.version>
     <native-maven-plugin.version>0.9.11</native-maven-plugin.version>
 
-    <vertx.version>4.5.9</vertx.version>
+    <vertx.version>4.5.10</vertx.version>
 
     <main.verticle>ninckblokje.vertx.httpreceiver.MainVerticle</main.verticle>
   </properties>
