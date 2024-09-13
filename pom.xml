@@ -70,7 +70,7 @@
                 <version>${jib-maven-plugin.version}</version>
                 <configuration>
                     <from>
-                        <image>icr.io/appcafe/open-liberty:kernel-slim-java21-openj9-ubi-minimal</image>
+                        <image>icr.io/appcafe/open-liberty:full-java21-openj9-ubi-minimal</image>
                         <platforms>
                             <platform>
                                 <architecture>amd64</architecture>
@@ -86,13 +86,13 @@
                         <image>ninckblokje/http-receiver:${project.version}</image>
                     </to>
                     <container>
-                        <appRoot>/config/apps/${project.name}.war</appRoot>
+                        <appRoot>/opt/ol/wlp/usr/servers/defaultServer/dropins/${project.name}.war</appRoot>
                     </container>
                     <extraDirectories>
                         <paths>
                             <path>
                                 <from>src/main/liberty/config</from>
-                                <into>/config</into>
+                                <into>/opt/ol/wlp/usr/servers/defaultServer</into>
                                 <includes>server.xml</includes>
                             </path>
                         </paths>
