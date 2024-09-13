@@ -9,9 +9,9 @@ configure the response using environment variables.
 
 It is possible to configure `http-receiver` using environment variables specified in the table below.
 
-| Key                                           | Default value          | Description                                        |
-|-----------------------------------------------|------------------------|----------------------------------------------------|
-| HTTP_RECEIVER_LOG_AUTHORIZATION_HEADER        | false                  | To log the authorization header (true of false)    |
+| Key                                       | Default value          | Description                                        |
+|-------------------------------------------|------------------------|----------------------------------------------------|
+| HTTPRECEIVERLOGAUTHORIZATIONHEADER        | false                  | To log the authorization header (true of false)    |
 
 ## Response message
 
