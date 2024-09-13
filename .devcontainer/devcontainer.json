@@ -22,7 +22,10 @@
 	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {
-			"extensions": [ "humao.rest-client" ]
+			"extensions": [
+				"humao.rest-client",
+				"Open-Liberty.liberty-dev-vscode-ext"
+			]
 		}
 	}
 
