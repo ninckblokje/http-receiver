@@ -5,6 +5,8 @@ configure the response using environment variables.
 
 `http-receiver` is available as a Docker image: `ninckblokje/http-receiver`
 
+[![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/ninckblokje/http-receiver/tree/openliberty)
+
 ## Configuration
 
 It is possible to configure `http-receiver` using environment variables specified in the table below.

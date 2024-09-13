@@ -1,0 +1,14 @@
+spec:
+  name: http-receiver
+  services:
+    - name: web
+      image:
+        registry_type: DOCKER_HUB
+        repository: ninckblokje/http-receiver
+        tag: 2.0.0-SNAPSHOT
+      http_port: 9080
+      health_check:
+        http_path: /health
+        port: 9080
+      instance_size_slug: apps-s-1vcpu-0.5gb
+      instance_count: 1
