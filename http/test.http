@@ -1,4 +1,4 @@
-# Copyright (c) 2022, ninckblokje
+# Copyright (c) 2024, ninckblokje
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -22,13 +22,13 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-GET http://localhost:8888/dummy
+GET {{httpEndpoint}}/dummy
 Authorization: Basic user:Dummy_123
 Host: server.dummy
 
 ###
 
-POST http://localhost:8888/dummy
+POST {{httpEndpoint}}/dummy
 Content-Type: application/json
 Host: server.dummy
 
@@ -38,7 +38,7 @@ Host: server.dummy
 
 ###
 
-POST http://localhost:8888/upload
+POST {{httpEndpoint}}/upload
 Content-Type: multipart/form-data; boundary=boundary
 
 --boundary
@@ -51,7 +51,7 @@ Content-Type: text/plain
 
 ###
 
-POST http://localhost:8888/upload
+POST {{httpEndpoint}}/upload
 Content-Type: multipart/form-data; boundary=boundary
 
 --boundary
@@ -64,13 +64,13 @@ Content-Type: text/plain
 
 ###
 
-GET https://localhost:8888/dummy
+GET {{httpsEndpoint}}/dummy
 Authorization: Basic user:Dummy_123
 Host: server.dummy
 
 ###
 
-POST https://localhost:8888/dummy
+POST {{httpsEndpoint}}/dummy
 Content-Type: application/json
 Host: server.dummy
 
@@ -80,7 +80,7 @@ Host: server.dummy
 
 ###
 
-POST https://localhost:8888/upload
+POST {{httpsEndpoint}}/upload
 Content-Type: multipart/form-data; boundary=boundary
 
 --boundary
@@ -93,7 +93,7 @@ Content-Type: text/plain
 
 ###
 
-POST https://localhost:8888/upload
+POST {{httpsEndpoint}}/upload
 Content-Type: multipart/form-data; boundary=boundary
 
 --boundary

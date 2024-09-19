@@ -3,7 +3,7 @@
 {
 	"name": "Java",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/java:1-17-bookworm",
+	"image": "mcr.microsoft.com/devcontainers/java:1-21-bookworm",
 
 	"features": {
 		"ghcr.io/devcontainers/features/java:1": {
@@ -22,7 +22,11 @@
 	// Configure tool-specific properties.
 	"customizations": {
 		"vscode": {
-			"extensions": [ "humao.rest-client" ]
+			"extensions": [
+				"humao.rest-client",
+				"Open-Liberty.liberty-dev-vscode-ext",
+				"redhat.vscode-yaml"
+			]
 		}
 	}
 
