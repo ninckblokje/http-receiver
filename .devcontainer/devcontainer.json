@@ -24,7 +24,8 @@
 		"vscode": {
 			"extensions": [
 				"humao.rest-client",
-				"Open-Liberty.liberty-dev-vscode-ext"
+				"Open-Liberty.liberty-dev-vscode-ext",
+				"redhat.vscode-yaml"
 			]
 		}
 	}
