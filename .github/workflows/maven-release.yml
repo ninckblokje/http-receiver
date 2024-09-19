@@ -44,7 +44,7 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
-        server: github
+        server-id: github
     - name: Configure Git
       run: |
         git config user.email "ninckblokje@users.noreply.github.com"
