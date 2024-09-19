@@ -1,25 +1,26 @@
-features:
-  - buildpack-stack=ubuntu-22
-ingress:
-  rules:
-    - component:
-        name: web
-        preserve_path_prefix: true
-      match:
-        path:
-          prefix: /http-receiver
-name: http-receiver
-services:
-  - health_check:
-      http_path: /health
-      initial_delay_seconds: 90
-      port: 9080
-    http_port: 9080
-    image:
-      registry: ninckblokje
-      registry_type: DOCKER_HUB
-      repository: http-receiver
-      tag: 2.0.0-SNAPSHOT
-    instance_count: 1
-    instance_size_slug: apps-s-1vcpu-0.5gb
-    name: web
+spec:
+  features:
+    - buildpack-stack=ubuntu-22
+  ingress:
+    rules:
+      - component:
+          name: web
+          preserve_path_prefix: true
+        match:
+          path:
+            prefix: /http-receiver
+  name: http-receiver
+  services:
+    - health_check:
+        http_path: /health
+        initial_delay_seconds: 90
+        port: 9080
+      http_port: 9080
+      image:
+        registry: ninckblokje
+        registry_type: DOCKER_HUB
+        repository: http-receiver
+        tag: 2.0.0-SNAPSHOT
+      instance_count: 1
+      instance_size_slug: apps-s-1vcpu-0.5gb
+      name: web
