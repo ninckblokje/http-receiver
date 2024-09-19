@@ -51,7 +51,7 @@ public class HttpReceiverServlet extends HttpServlet {
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpReceiverServlet.class);
 
     @Inject
-    @ConfigProperty(name = "httpReceiverLogAuthorizationHeader", defaultValue = "false")
+    @ConfigProperty(name = "HTTP_RECEIVER_LOG_AUTHORIZATION_HEADER", defaultValue = "false")
     private boolean logAuthorizationHeader;
 
     @Override

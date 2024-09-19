@@ -22,17 +22,13 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-GET http://localhost:9080/health
-
-###
-
-GET http://localhost:9080{{contextPath}}/dummy
+GET {{httpEndpoint}}/dummy
 Authorization: Basic user:Dummy_123
 Host: server.dummy
 
 ###
 
-POST http://localhost:9080{{contextPath}}/dummy
+POST {{httpEndpoint}}/dummy
 Content-Type: application/json
 Host: server.dummy
 
@@ -42,7 +38,7 @@ Host: server.dummy
 
 ###
 
-POST http://localhost:9080{{contextPath}}/upload
+POST {{httpEndpoint}}/upload
 Content-Type: multipart/form-data; boundary=boundary
 
 --boundary
@@ -55,7 +51,7 @@ Content-Type: text/plain
 
 ###
 
-POST http://localhost:9080{{contextPath}}/upload
+POST {{httpEndpoint}}/upload
 Content-Type: multipart/form-data; boundary=boundary
 
 --boundary
@@ -68,17 +64,13 @@ Content-Type: text/plain
 
 ###
 
-GET https://localhost:9443/health
-
-###
-
-GET https://localhost:9443{{contextPath}}/dummy
+GET {{httpsEndpoint}}/dummy
 Authorization: Basic user:Dummy_123
 Host: server.dummy
 
 ###
 
-POST https://localhost:9443{{contextPath}}/dummy
+POST {{httpsEndpoint}}/dummy
 Content-Type: application/json
 Host: server.dummy
 
@@ -88,7 +80,7 @@ Host: server.dummy
 
 ###
 
-POST https://localhost:9443{{contextPath}}/upload
+POST {{httpsEndpoint}}/upload
 Content-Type: multipart/form-data; boundary=boundary
 
 --boundary
@@ -101,7 +93,7 @@ Content-Type: text/plain
 
 ###
 
-POST https://localhost:9443{{contextPath}}/upload
+POST {{httpsEndpoint}}/upload
 Content-Type: multipart/form-data; boundary=boundary
 
 --boundary
