@@ -20,7 +20,7 @@ spec:
         registry: ninckblokje
         registry_type: DOCKER_HUB
         repository: http-receiver
-        tag: 2.0.0-SNAPSHOT
+        tag: latest
       instance_count: 1
       instance_size_slug: apps-s-1vcpu-0.5gb
       name: web
