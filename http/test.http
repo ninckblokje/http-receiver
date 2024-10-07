@@ -28,6 +28,12 @@ Host: server.dummy
 
 ###
 
+GET {{httpEndpoint}}/dummy?test=true
+Authorization: Basic user:Dummy_123
+Host: server.dummy
+
+###
+
 POST {{httpEndpoint}}/dummy
 Content-Type: application/json
 Host: server.dummy
@@ -65,6 +71,12 @@ Content-Type: text/plain
 ###
 
 GET {{httpsEndpoint}}/dummy
+Authorization: Basic user:Dummy_123
+Host: server.dummy
+
+###
+
+GET {{httpsEndpoint}}/dummy?test=true
 Authorization: Basic user:Dummy_123
 Host: server.dummy
 

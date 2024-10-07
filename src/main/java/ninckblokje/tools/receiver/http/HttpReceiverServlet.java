@@ -64,6 +64,10 @@ public class HttpReceiverServlet extends HttpServlet {
         req.getHeaderNames().asIterator()
                 .forEachRemaining(header -> LOGGER.info("\t{}: {}", header, getHeaderValue(req, header)));
 
+        LOGGER.info("- With query parameters:");
+        req.getParameterNames().asIterator()
+                .forEachRemaining(parameter -> LOGGER.info("\t{}: {}", parameter, req.getParameter(parameter)));
+
         LOGGER.info("- With body:");
         req.getReader().lines()
                 .map("\t%s"::formatted)
@@ -88,6 +92,10 @@ public class HttpReceiverServlet extends HttpServlet {
         req.getHeaderNames().asIterator()
                 .forEachRemaining(header -> headers.put(header, getHeaderValue(req, header)));
 
+        var queryParameters = new HashMap<String, String>();
+        req.getParameterNames().asIterator()
+                .forEachRemaining(parameter -> queryParameters.put(parameter, req.getParameter(parameter)));
+
         return new RequestDetails(
                 req.getRemoteAddr(),
                 req.getRequestURI(),
@@ -95,7 +103,8 @@ public class HttpReceiverServlet extends HttpServlet {
                 req.isSecure(),
                 "%s".formatted(req.getAttribute("jakarta.servlet.request.secure_protocol")),
                 "%s".formatted(req.getAttribute("jakarta.servlet.request.cipher_suite")),
-                headers);
+                headers,
+                queryParameters);
     }
 
     String getHeaderValue(HttpServletRequest req, String header) {
