@@ -35,5 +35,6 @@ public record RequestDetails(
         boolean isSecure,
         String tlsVersion,
         String cipher,
-        Map<String, String> receivedHeaders
+        Map<String, String> receivedHeaders,
+        Map<String, String> queryParameters
 ) {}
