@@ -4,3 +4,6 @@ updates:
     directory: "/"
     schedule:
       interval: "weekly"
+    ignore:
+      - dependency-name: "jakarta.platform:jakarta.jakartaee-api"
+      - dependency-name: "org.eclipse.microprofile:microprofile"
