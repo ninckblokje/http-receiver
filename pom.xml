@@ -38,7 +38,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jib-maven-plugin.version>3.4.6</jib-maven-plugin.version>
         <maven-deploy-plugin.version>3.1.4</maven-deploy-plugin.version>
-        <maven-releases-plugin.version>3.1.1</maven-releases-plugin.version>
+        <maven-releases-plugin.version>3.3.1</maven-releases-plugin.version>
     </properties>
 
     <scm>
